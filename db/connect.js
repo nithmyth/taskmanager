@@ -1,9 +1,11 @@
-const { connect } = require('http2');
 const mongoose = require('mongoose');
+const fetchSecret = require('../secrets/fetchSecret');
+const { URI } = require('../config');
 
-const connectDB = () => {
+const connectDB = async () => {
+  const uri = await fetchSecret(URI);
   mongoose
-    .connect(process.env.URI)
+    .connect()
     .then(() => console.log('Connected to Mongoose'))
     .catch((err) => console.log('Error connecting to mongoose', err));
 };

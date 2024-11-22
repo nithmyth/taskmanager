@@ -1,15 +1,23 @@
 require('dotenv').config();
 const mysql = require('mysql2');
+const fetchSecret = require('../secrets/fetchSecret');
+const props = require('../config');
 
-const db = mysql
-  .createPool({
-    connectionLimit: 10,
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PWD,
-    database: process.env.MYSQL_DB,
-  })
-  .promise();
+const db = async () => {
+  const host = await fetchSecret(props.MYSQL_HOST);
+  const user = await fetchSecret(props.MYSQL_USER);
+  const password = await fetchSecret(props.MYSQL_PWD);
+  const database = await fetchSecret(props.MYSQL_DB);
+  return mysql
+    .createPool({
+      connectionLimit: 10,
+      host,
+      user,
+      password,
+      database,
+    })
+    .promise();
+};
 
 // con.connect((err) => {
 //   if (err) {
@@ -19,4 +27,4 @@ const db = mysql
 //   console.log('MySQL Connected');
 // });
 
-module.exports = db;
+module.exports = await db; //top-level await

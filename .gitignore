@@ -1,3 +1,5 @@
 /node_modules
 .env
 tasks.mongodb.js
+.env.yaml
+.gcloudignore

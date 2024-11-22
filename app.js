@@ -1,11 +1,10 @@
-console.clear();
 const express = require('express');
 require('dotenv').config();
 const connectDB = require('./db/connect');
 const notFound = require('./middleware/notFound');
 const errorHandler = require('./middleware/errorHandling');
 const app = express();
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
 app.use(express.static('./public'));
 
@@ -28,19 +27,22 @@ app.use(errorHandler);
 //patch - /api/v1/tasks/:id
 //delete - /api/v1/tasks/:id
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}...`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is listening on port ${PORT}...`);
+// });
 
-// const start = async () => {
-//   try {
-//     await connectDB();
-//     app.listen(PORT, () => {
-//       console.log(`Server is listening on port ${PORT}...`);
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+const start = async () => {
+  try {
+    await connectDB();
+    // app.listen(PORT, () => {
+    //   console.log(`Server is listening on port ${PORT}...`);
+    // });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-// start();
+start();
+
+//to deploy to cloud functions
+exports.tasks = app;
