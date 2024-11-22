@@ -27,4 +27,4 @@ const db = async () => {
 //   console.log('MySQL Connected');
 // });
 
-module.exports = await db; //top-level await
+module.exports = db; //top-level await

@@ -1,6 +1,6 @@
 const Task = require('./Task');
 
-const db = require('../db/mysql_connect');
+const getDB = require('../db/mysql_connect');
 const Q = require('../db/mysql_queries');
 
 const generateUniqueId = () => {
@@ -15,6 +15,7 @@ const getAllTasks = async () => {
     const res = await Task.find({});
 
     // MySQL
+    // const db = await getDB();
     // let [res] = await db.execute(Q.qGetAllTasks);
     // //converting Buffer sql boolean alternative to an actual boolean before sending it back to client
     // res = res.map((task) => {
@@ -43,6 +44,7 @@ const postATask = async (val) => {
     });
 
     // MYSQL
+    // const db = await getDB();
     // const [res] = await db.execute(Q.qPostATask, [
     //   generateUniqueId(),
     //   val.name,
@@ -62,6 +64,8 @@ const getTaskById = async (id) => {
     // // const res = await Task.findOne({ id });
     const res = await Task.findById(id);
 
+    // MySQL
+    // const db = await getDB();
     // let [res] = await db.execute(Q.qGetATask, [id]);
     // res = res.map((task) => {
     //   const completed = Boolean(Buffer.from(task.completed).readInt8());
@@ -83,6 +87,9 @@ const updateATask = async (_id, val) => {
       new: true, //returns back the updated doc
       runValidators: true, //this will take care of instances where name is empty since it is required and so you have to put in something
     }); //without brackets because _id will default to the ObjectID and val is an object being passed to this
+
+    // MySQL
+    // const db = await getDB();
     // const [res] = await db.execute(Q.qUpdateATask, val.name, val.completed);
     // if (res) console.log(`Updated value ${val} for id ${_id}`);
     return res;
@@ -98,6 +105,8 @@ const deleteATask = async (_id) => {
     // const res = await Task.findOneAndDelete({ id });
     const res = await Task.deleteOne({ _id });
 
+    // MySQL
+    // const db = await getDB();
     // const [res] = await db.execute(Q.qDeleteATask, [_id]);
     console.log('Deleted id ', _id);
     return res;
